@@ -19,10 +19,10 @@
                 "updatedAt": "Updated at",
                 "bitRate": "Bit rate",
                 "discSubtitle": "Disc Subtitle",
-                "songSubtitle": "Song Subtitle"
-                "work": "Work"
-                "movementNumber": "movementNumber"
-                "movementName": "movementName"
+                "songSubtitle": "Song Subtitle",
+                "work": "Work",
+                "movementNumber": "movementNumber",
+                "movementName": "movementName",
                 "starred": "Favourite",
                 "comment": "Comment",
                 "rating": "Rating",
