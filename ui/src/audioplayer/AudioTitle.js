@@ -21,7 +21,7 @@ const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
     <Link to={`/album/${song.albumId}/show`} className={className}>
       <span>
         <span className={clsx(classes.songTitle, 'songTitle')}>
-          {song.title}
+          {song.songSubtitle ? `${song.title} · ${song.songSubTitle}` : `${song.title}`}
         </span>
         {isDesktop && (
           <QualityInfo record={qi} className={classes.qualityInfo} />
