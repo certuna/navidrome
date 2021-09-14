@@ -34,7 +34,7 @@ export const SongTitleField = ({ showTrackNumbers, ...props }) => {
     currentId && (currentId === record.id || currentId === record.mediaFileId)
 
   const trackName = (r) => {
-    const name = r.title
+    const name = [r.title, r.songSubtitle].filter(Boolean).join(' · ');
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
     }
