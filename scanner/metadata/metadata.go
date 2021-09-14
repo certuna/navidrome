@@ -70,7 +70,7 @@ func (t Tags) Title() string  { return t.getFirstTagValue("title", "sort_name", 
 func (t Tags) Album() string  { return t.getFirstTagValue("album", "sort_album", "albumsort") }
 func (t Tags) Artist() string { return t.getFirstTagValue("artist", "sort_artist", "artistsort") }
 func (t Tags) AlbumArtist() string {
-	return t.getFirstTagValue("album_artist", "album artist", "albumartist")
+	return t.getFirstTagValue("albumartist", "album artist", "album_artist")
 }
 func (t Tags) SortTitle() string       { return t.getSortTag("", "title", "name") }
 func (t Tags) SortAlbum() string       { return t.getSortTag("", "album") }
@@ -87,9 +87,9 @@ func (t Tags) DiscSubtitle() string {
 	return t.getFirstTagValue("tsst", "discsubtitle", "setsubtitle")
 }
 func (t *Tags) SongSubtitle() string	{ return t.getFirstTagValue("subtitle", "tit3") }
-func (t *Tags) Work() string		{ return t.getFirstTagValue("work--name", "work name", "work", "tit1") }
-func (t *Tags) MovementNumber() (int, int)	{ return t.getTuple("movement--number", "movementnumber", "movement", "mvin") }
-func (t *Tags) MovementName() string	{ return t.getFirstTagValue("movement--name", "movement name", "movementname", "mvnm") }
+func (t *Tags) Work() string		{ return t.getFirstTagValue("tit1", "work", "work name", "work--name") }
+func (t *Tags) MovementNumber() (int, int)	{ return t.getTuple("mvin", "movement", "movementnumber", "movement--number") }
+func (t *Tags) MovementName() string	{ return t.getFirstTagValue("mvnm", "movementname", "movement name", "movement--name") }
 func (t Tags) CatalogNum() string { return t.getFirstTagValue("catalognumber") }
 func (t Tags) Bpm() int           { return (int)(math.Round(t.getFloat("tbpm", "bpm", "fbpm"))) }
 func (t Tags) HasPicture() bool   { return t.getFirstTagValue("has_picture") != "" }
