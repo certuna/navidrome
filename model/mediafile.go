@@ -22,6 +22,10 @@ type MediaFile struct {
 	TrackNumber          int       `structs:"track_number" json:"trackNumber"`
 	DiscNumber           int       `structs:"disc_number" json:"discNumber"`
 	DiscSubtitle         string    `structs:"disc_subtitle" json:"discSubtitle,omitempty"`
+	SongSubtitle         string    `structs:"song_subtitle" json:"songSubtitle,omitempty"`
+	Work                 string    `structs:"work" json:"work,omitempty"`
+	MovementNumber       int       `structs:"movement_number" json:"movementNumber,omitempty"`
+	MovementName         string    `structs:"movement_name" json:"movementName,omitempty"`
 	Year                 int       `structs:"year" json:"year"`
 	Size                 int64     `structs:"size" json:"size"`
 	Suffix               string    `structs:"suffix" json:"suffix"`
