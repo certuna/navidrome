@@ -23,11 +23,12 @@ const initialState = {
 const mapToAudioLists = (item) => {
   // If item comes from a playlist, trackId is mediaFileId
   const trackId = item.mediaFileId || item.id
+  const displayedTitle = Boolean(item.movementName) ? item.movementName : item.title;
   return {
     trackId,
     uuid: uuidv4(),
     song: item,
-    name: {(Boolean(item.movementName) && Boolean(item.work)) ? item.movementName : item.title},
+    name: displayedTitle,
     singer: item.artist,
     duration: item.duration,
     musicSrc: subsonic.streamUrl(trackId),
