@@ -142,7 +142,8 @@ const WorkRow = ({
 export const SongDatagridRow = ({
   record,
   children,
-  firstTracks,
+  firstTracksDisc,
+  firstTracksWork,
   contextAlwaysVisible,
   onClickDiscSubtitle,
   onClickWork,
@@ -159,7 +160,7 @@ export const SongDatagridRow = ({
   const childCount = fields.length
   return (
     <>
-      {firstTracks.has(record.id) && (
+      {firstTracksDisc.has(record.id) && (
         <DiscSubtitleRow
           record={record}
           onClick={onClickDiscSubtitle}
@@ -167,7 +168,7 @@ export const SongDatagridRow = ({
           colSpan={childCount + (rest.expand ? 1 : 0)}
         />
       )}
-      {firstTracks.has(record.id) && (
+      {firstTracksWork.has(record.id) && (
         <WorkRow
           record={record}
           onClick={onClickWork}
@@ -188,8 +189,8 @@ export const SongDatagridRow = ({
 SongDatagridRow.propTypes = {
   record: PropTypes.object,
   children: PropTypes.node,
-  firstTracks: PropTypes.instanceOf(Set),
-  contextAlwaysVisible: PropTypes.bool,
+  firstTracksDisc: PropTypes.instanceOf(Set),
+  firstTracksWork: PropTypes.instanceOf(Set),
   onClickDiscSubtitle: PropTypes.func,
   onClickWork: PropTypes.func,
 }
@@ -221,7 +222,7 @@ const SongDatagridBody = ({
     },
     [dispatch, data, ids]
   )
-  const firstTracks = useMemo(() => {
+  const firstTracksDisc = useMemo(() => {
     if (!ids) {
       return new Set()
     }
@@ -247,12 +248,34 @@ const SongDatagridBody = ({
     return set
   }, [ids, data, showDiscSubtitles])
 
+  const firstTracksWork = useMemo(() => {
+    if (!ids) {
+      return new Set()
+    }
+    const set = new Set(
+      ids
+        .filter((i) => data[i])
+        .reduce((acc, id) => {
+          const last = acc && acc[acc.length - 1]
+          if (
+            acc.length === 0 ||
+            (last && data[id].work !== data[last].work)
+          ) {
+            acc.push(id)
+          }
+          return acc
+        }, [])
+    )
+    return set
+  }, [ids, data])
+
   return (
     <PureDatagridBody
       {...rest}
       row={
         <SongDatagridRow
-          firstTracks={firstTracks}
+          firstTracksDisc={firstTracksDisc}
+          firstTracksWork={firstTracksWork}
           contextAlwaysVisible={contextAlwaysVisible}
           onClickDiscSubtitle={playDisc}
           onClickWork={playWork}
