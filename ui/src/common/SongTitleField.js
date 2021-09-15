@@ -9,6 +9,20 @@ import PlayingDark from '../icons/playing-dark.gif'
 import PausedLight from '../icons/paused-light.png'
 import PausedDark from '../icons/paused-dark.png'
 
+function romanize (num) {
+	if (!+num)
+		return false;
+	var	digits = String(+num).split(""),
+		key = ["","C","CC","CCC","CD","D","DC","DCC","DCCC","CM",
+		       "","X","XX","XXX","XL","L","LX","LXX","LXXX","XC",
+		       "","I","II","III","IV","V","VI","VII","VIII","IX"],
+		roman = "",
+		i = 3;
+	while (i--)
+		roman = (key[+digits.pop() + (i * 10)] || "") + roman;
+	return Array(+digits.join("") + 1).join("M") + roman;
+}
+
 const useStyles = makeStyles({
   icon: {
     width: '32px',
@@ -34,14 +48,14 @@ export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
     currentId && (currentId === record.id || currentId === record.mediaFileId)
 
   const trackName = (r) => {
+    let name
     if (r.work && r.movementName) {
-      const name = [r.movementNumber, r.movementName].filter(Boolean).join('. ')
-      if (!dropWork) {
-        name = [r.work, name].filter(Boolean).join(': ')
-        }
-      else
-      const name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
-      }
+      if (r.movementNumber > 0) {romanMovementNumber = romanize(r.movementNumber)}
+      name = [romanMovementNumber, r.movementName].filter(Boolean).join('. ')
+      if (!dropWork) {name = [r.work, name].filter(Boolean).join(': ')
+                     }
+      else {name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
+           }
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
     }
