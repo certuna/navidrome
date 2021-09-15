@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import { QualityInfo } from '../common'
 import useStyle from './styles'
+import { romanize } from '../common/SongTitleField.js'
 
 const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
   const classes = useStyle()
@@ -15,22 +16,32 @@ const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
   }
 
   const song = audioInfo.song
+  const displayWorkMovement = Boolean(song.work) && Boolean(song.movementName)
+  const romanizedMovementNumber = romanize(song.movementNumber)
   const qi = { suffix: song.suffix, bitRate: song.bitRate }
 
   return (
     <Link to={`/album/${song.albumId}/show`} className={className}>
       <span>
+        {displayWorkMovement && (
+        <span className={clsx(classes.songTitle, 'songTitle')}>
+          {romanizedMovementNumber ? `${song.work}: ${romanizedMovementNumber}. ${song.movementName}` : `${song.work}: ${song.movementName}`}
+        </span>
+        )}
+        {!displayWorkMovement && (
         <span className={clsx(classes.songTitle, 'songTitle')}>
           {song.songSubtitle ? `${song.title} · ${song.songSubtitle}` : `${song.title}`}
         </span>
+        )}
         {isDesktop && (
           <QualityInfo record={qi} className={classes.qualityInfo} />
         )}
+
       </span>
       {!isMobile && (
         <span className={clsx(classes.songInfo)}>
           {`${song.artist} · ${song.album}` +
-            (song.year ? ` · ${song.year}` : '')}
+            (song.year ? ` (${song.year})` : '')}
         </span>
       )}
       {isMobile && (
@@ -39,7 +50,7 @@ const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
             {`${song.artist}`}
           </span>
           <span className={clsx(classes.songInfo, classes.songAlbum)}>
-            {song.year ? `${song.album} · ${song.year}` : `${song.album}`}
+            {song.year ? `${song.album} (${song.year})` : `${song.album}`}
           </span>
         </>
       )}
