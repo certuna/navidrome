@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const SongTitleField = ({ showTrackNumbers, ...props }) => {
+export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
   const theme = useTheme()
   const classes = useStyles()
   const { record } = props
@@ -34,7 +34,14 @@ export const SongTitleField = ({ showTrackNumbers, ...props }) => {
     currentId && (currentId === record.id || currentId === record.mediaFileId)
 
   const trackName = (r) => {
-    const name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
+    if (r.work && r.movementName) {
+      const name = [r.movementNumber, r.movementName].filter(Boolean).join('. ')
+      if (!dropWork) {
+        const name = [r.work, name].filter(Boolean).join(': ')
+        }
+      else
+      const name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
+      }
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
     }
