@@ -9,7 +9,7 @@ import PlayingDark from '../icons/playing-dark.gif'
 import PausedLight from '../icons/paused-light.png'
 import PausedDark from '../icons/paused-dark.png'
 
-function romanize (num) {
+export function romanize (num) {
 	if (!+num)
 		return false;
 	var	digits = String(+num).split(""),
@@ -48,14 +48,12 @@ export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
     currentId && (currentId === record.id || currentId === record.mediaFileId)
 
   const trackName = (r) => {
-    let name
-    if (r.work && r.movementName) {
-      if (r.movementNumber > 0) {romanMovementNumber = romanize(r.movementNumber)}
-      name = [romanMovementNumber, r.movementName].filter(Boolean).join('. ')
+    let name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
+    if (Boolean(r.work) && Boolean(r.movementName)) {
+      name = [romanize(r.movementNumber), r.movementName].filter(Boolean).join('. ')
       if (!dropWork) {name = [r.work, name].filter(Boolean).join(': ')
-                     }
-      else {name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
-           }
+			}
+		}
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
     }
