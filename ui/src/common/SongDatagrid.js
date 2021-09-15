@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/core/styles'
 import AlbumIcon from '@material-ui/icons/Album'
+import WorkIcon from '@material-ui/icons/MenuBook'
 import clsx from 'clsx'
 import { playTracks } from '../actions'
 import { AlbumContextMenu } from '../common'
@@ -25,7 +26,11 @@ const useStyles = makeStyles({
     verticalAlign: 'text-top',
     marginRight: '4px',
   },
-  row: {
+  workIcon: {
+    verticalAlign: 'text-top',
+    marginRight: '4px',
+  },
+    row: {
     cursor: 'pointer',
     '&:hover': {
       '& $contextMenu': {
@@ -92,12 +97,55 @@ const DiscSubtitleRow = ({
   )
 }
 
+const WorkRow = ({
+  record,
+  onClick,
+  colSpan,
+  contextAlwaysVisible,
+}) => {
+  const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'))
+  const classes = useStyles({ isDesktop })
+  const handlePlayWork = (work) => () => {
+    onClick(work)
+  }
+
+  let subtitle = []
+  if (record.work) {
+    subtitle.push(record.work)
+  }
+
+  return (
+    <TableRow
+      hover
+      onClick={handlePlayWork(record.work)}
+      className={classes.row}
+    >
+      <TableCell colSpan={colSpan}>
+        <Typography variant="h6" className={classes.subtitle}>
+          <WorkIcon className={classes.workIcon} fontSize={'small'} />
+          {subtitle.join(': ')}
+        </Typography>
+      </TableCell>
+      <TableCell>
+        <AlbumContextMenu
+          record={{ id: record.albumId }}
+          work={record.work}
+          showLove={false}
+          className={classes.contextMenu}
+          visible={contextAlwaysVisible}
+        />
+      </TableCell>
+    </TableRow>
+  )
+}
+
 export const SongDatagridRow = ({
   record,
   children,
   firstTracks,
   contextAlwaysVisible,
   onClickDiscSubtitle,
+  onClickWork,
   className,
   ...rest
 }) => {
@@ -119,7 +167,14 @@ export const SongDatagridRow = ({
           colSpan={childCount + (rest.expand ? 1 : 0)}
         />
       )}
-      <PureDatagridRow
+      {firstTracks.has(record.id) && (
+        <WorkRow
+          record={record}
+          onClick={onClickWork}
+          contextAlwaysVisible={contextAlwaysVisible}
+          colSpan={childCount + (rest.expand ? 1 : 0)}
+        />
+      )}      <PureDatagridRow
         record={record}
         {...rest}
         className={clsx(className, classes.row)}
@@ -136,10 +191,12 @@ SongDatagridRow.propTypes = {
   firstTracks: PropTypes.instanceOf(Set),
   contextAlwaysVisible: PropTypes.bool,
   onClickDiscSubtitle: PropTypes.func,
+  onClickWork: PropTypes.func,
 }
 
 SongDatagridRow.defaultProps = {
   onClickDiscSubtitle: () => {},
+  onClickWork: () => {},
 }
 
 const SongDatagridBody = ({
@@ -157,7 +214,13 @@ const SongDatagridBody = ({
     },
     [dispatch, data, ids]
   )
-
+  const playWork = useCallback(
+    (work) => {
+      const idsToPlay = ids.filter((id) => data[id].work === work)
+      dispatch(playTracks(data, idsToPlay))
+    },
+    [dispatch, data, ids]
+  )
   const firstTracks = useMemo(() => {
     if (!ids) {
       return new Set()
@@ -192,6 +255,7 @@ const SongDatagridBody = ({
           firstTracks={firstTracks}
           contextAlwaysVisible={contextAlwaysVisible}
           onClickDiscSubtitle={playDisc}
+          onClickWork={playWork}
         />
       }
     />
