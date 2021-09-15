@@ -127,14 +127,14 @@ const Player = () => {
       setStartTime(Date.now())
       if (info.duration) {
         const song = info.song
-        document.title = `${song.title} - ${song.artist} - Navidrome`
+        document.title = `${song.movementName} - ${song.movementName} - ${song.artist} - Navidrome`
         subsonic.nowPlaying(info.trackId)
         setScrobbled(false)
         if (config.gaTrackingId) {
           ReactGA.event({
             category: 'Player',
             action: 'Play song',
-            label: `${song.title} - ${song.artist}`,
+            label: `${song.movementName} - ${song.title} - ${song.artist}`,
           })
         }
         if (showNotifications) {
