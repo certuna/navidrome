@@ -106,6 +106,7 @@ const SongList = (props) => {
           sortByOrder={'ASC'}
         />
       ),
+      work: <TextField source="work" />,
       artist: <TextField source="artist" />,
       albumArtist: <TextField source="albumArtist" />,
       trackNumber: isDesktop && <NumberField source="trackNumber" />,
@@ -139,7 +140,7 @@ const SongList = (props) => {
   const columns = useSelectedFields({
     resource: 'song',
     columns: toggleableFields,
-    defaultOff: ['bpm', 'playDate', 'albumArtist', 'genre', 'comment'],
+    defaultOff: ['work', 'albumArtist', 'playDate', 'bpm', 'genre', 'comment'],
   })
 
   return (
@@ -162,7 +163,7 @@ const SongList = (props) => {
             contextAlwaysVisible={!isDesktop}
             classes={{ row: classes.row }}
           >
-            <SongTitleField source="title" showTrackNumbers={false} dropWork={false} />
+            <SongTitleField source="title" showTrackNumbers={false} dropWork={true} />
             {columns}
             <SongContextMenu
               source={'starred'}
