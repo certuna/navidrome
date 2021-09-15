@@ -27,7 +27,7 @@ const mapToAudioLists = (item) => {
     trackId,
     uuid: uuidv4(),
     song: item,
-    name: item.title,
+    name: {(Boolean(item.movementName) && Boolean(item.work)) ? item.movementName : item.title},
     singer: item.artist,
     duration: item.duration,
     musicSrc: subsonic.streamUrl(trackId),
