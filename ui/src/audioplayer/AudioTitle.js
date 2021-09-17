@@ -30,7 +30,7 @@ const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
         )}
         {!displayWorkMovement && (
         <span className={clsx(classes.songTitle, 'songTitle')}>
-          {song.songSubtitle ? `${song.title} · ${song.songSubtitle}` : `${song.title}`}
+          {[song.work, song.title, song.songSubtitle].filter(Boolean).join(' · ')}
         </span>
         )}
         {isDesktop && (
