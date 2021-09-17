@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
 })
 
-export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
+export const SongTitleField = ({ showTrackNumbers, showWork, ...props }) => {
   const theme = useTheme()
   const classes = useStyles()
   const { record } = props
@@ -52,7 +52,7 @@ export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
     if (Boolean(r.work) && Boolean(r.movementName)) {
       name = [romanize(r.movementNumber), r.movementName].filter(Boolean).join('. ')
 	}
-    if (!dropWork) {name = [r.work, name].filter(Boolean).join(': ')
+    if (showWork) {name = [r.work, name].filter(Boolean).join(': ')
 	}
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
