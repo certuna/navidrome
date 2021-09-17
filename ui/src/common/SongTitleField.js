@@ -51,9 +51,9 @@ export const SongTitleField = ({ showTrackNumbers, dropWork, ...props }) => {
     let name = [r.title, r.songSubtitle].filter(Boolean).join(' · ')
     if (Boolean(r.work) && Boolean(r.movementName)) {
       name = [romanize(r.movementNumber), r.movementName].filter(Boolean).join('. ')
-      if (!dropWork) {name = [r.work, name].filter(Boolean).join(': ')
-			}
-		}
+	}
+    if (!dropWork) {name = [r.work, name].filter(Boolean).join(': ')
+	}
     if (r.trackNumber && showTrackNumbers) {
       return r.trackNumber.toString().padStart(2, '0') + ' ' + name
     }
