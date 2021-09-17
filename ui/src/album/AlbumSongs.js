@@ -107,7 +107,7 @@ const AlbumSongs = (props) => {
           source="title"
           sortable={false}
           showTrackNumbers={!isDesktop}
-          dropWork={true}
+          showWork={false}
         />
       ),
       artist: isDesktop && <TextField source="artist" sortable={false} />,
