@@ -86,11 +86,13 @@ var _ = Describe("Tags", func() {
 				"musicbrainz_albumid":       {"f68c985d-f18b-4f4a-b7f0-87837cf3fbf9"},
 				"musicbrainz_artistid":      {"89ad4ac3-39f7-470e-963a-56509c546377"},
 				"musicbrainz_albumartistid": {"ada7a83c-e3e1-40f1-93f9-3e73dbc9298a"},
+				"musicbrainz_workid":        {"77ceb3d1-08d1-31b0-991f-aba980da75c9"},
 			}
 			Expect(md.MbzTrackID()).To(Equal("8f84da07-09a0-477b-b216-cc982dabcde1"))
 			Expect(md.MbzAlbumID()).To(Equal("f68c985d-f18b-4f4a-b7f0-87837cf3fbf9"))
 			Expect(md.MbzArtistID()).To(Equal("89ad4ac3-39f7-470e-963a-56509c546377"))
 			Expect(md.MbzAlbumArtistID()).To(Equal("ada7a83c-e3e1-40f1-93f9-3e73dbc9298a"))
+			Expect(md.MbzWorkID()).To(Equal("77ceb3d1-08d1-31b0-991f-aba980da75c9"))
 		})
 		It("return empty string for invalid MBID", func() {
 			md := &Tags{}
@@ -99,11 +101,13 @@ var _ = Describe("Tags", func() {
 				"musicbrainz_albumid":       {"11406732"},
 				"musicbrainz_artistid":      {"200455"},
 				"musicbrainz_albumartistid": {"194"},
+				"musicbrainz_workid":        {"1337"},
 			}
 			Expect(md.MbzTrackID()).To(Equal(""))
 			Expect(md.MbzAlbumID()).To(Equal(""))
 			Expect(md.MbzArtistID()).To(Equal(""))
 			Expect(md.MbzAlbumArtistID()).To(Equal(""))
+			Expect(md.MbzWorkID()).To(Equal(""))
 		})
 	})
 

@@ -86,10 +86,14 @@ func (t Tags) DiscNumber() (int, int)  { return t.getTuple("disc", "discnumber")
 func (t Tags) DiscSubtitle() string {
 	return t.getFirstTagValue("tsst", "discsubtitle", "setsubtitle")
 }
-func (t *Tags) SongSubtitle() string	{ return t.getFirstTagValue("subtitle", "tit3") }
-func (t *Tags) Work() string		{ return t.getFirstTagValue("tit1", "work", "work name", "work--name") }
-func (t *Tags) MovementNumber() (int, int)	{ return t.getTuple("mvin", "movement", "movementnumber", "movement--number") }
-func (t *Tags) MovementName() string	{ return t.getFirstTagValue("mvnm", "movementname", "movement name", "movement--name") }
+func (t *Tags) SongSubtitle() string { return t.getFirstTagValue("subtitle", "tit3") }
+func (t *Tags) Work() string         { return t.getFirstTagValue("tit1", "work", "work name", "work--name") }
+func (t *Tags) MovementNumber() (int, int) {
+	return t.getTuple("mvin", "movement", "movementnumber", "movement--number")
+}
+func (t *Tags) MovementName() string {
+	return t.getFirstTagValue("mvnm", "movementname", "movement name", "movement--name")
+}
 func (t Tags) CatalogNum() string { return t.getFirstTagValue("catalognumber") }
 func (t Tags) Bpm() int           { return (int)(math.Round(t.getFloat("tbpm", "bpm", "fbpm"))) }
 func (t Tags) HasPicture() bool   { return t.getFirstTagValue("has_picture") != "" }
@@ -110,6 +114,7 @@ func (t Tags) MbzAlbumType() string {
 func (t Tags) MbzAlbumComment() string {
 	return t.getFirstTagValue("musicbrainz_albumcomment", "musicbrainz album comment")
 }
+func (t Tags) MbzWorkID() string { return t.getMbzID("musicbrainz_workid", "musicbrainz work id") }
 
 // File properties
 

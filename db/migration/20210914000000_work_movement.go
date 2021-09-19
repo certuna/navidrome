@@ -20,6 +20,8 @@ alter table media_file
 	add movement_number integer not null default 0;
 alter table media_file
 	add movement_name varchar(255);
+alter table media_file
+	add mbz_work_id varchar(255);
 `)
 	if err != nil {
 		return err
