@@ -30,7 +30,7 @@ const useStyles = makeStyles({
     verticalAlign: 'text-top',
     marginRight: '4px',
   },
-    row: {
+  row: {
     cursor: 'pointer',
     '&:hover': {
       '& $contextMenu': {
@@ -97,12 +97,7 @@ const DiscSubtitleRow = ({
   )
 }
 
-const WorkRow = ({
-  record,
-  onClick,
-  colSpan,
-  contextAlwaysVisible,
-}) => {
+const WorkRow = ({ record, onClick, colSpan, contextAlwaysVisible }) => {
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'))
   const classes = useStyles({ isDesktop })
   const handlePlayWork = (work) => () => {
@@ -175,7 +170,8 @@ export const SongDatagridRow = ({
           contextAlwaysVisible={contextAlwaysVisible}
           colSpan={childCount + (rest.expand ? 1 : 0)}
         />
-      )}      <PureDatagridRow
+      )}{' '}
+      <PureDatagridRow
         record={record}
         {...rest}
         className={clsx(className, classes.row)}
@@ -257,10 +253,7 @@ const SongDatagridBody = ({
         .filter((i) => data[i])
         .reduce((acc, id) => {
           const last = acc && acc[acc.length - 1]
-          if (
-            acc.length === 0 ||
-            (last && data[id].work !== data[last].work)
-          ) {
+          if (acc.length === 0 || (last && data[id].work !== data[last].work)) {
             acc.push(id)
           }
           return acc
