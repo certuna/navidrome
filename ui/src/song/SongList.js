@@ -163,7 +163,11 @@ const SongList = (props) => {
             contextAlwaysVisible={!isDesktop}
             classes={{ row: classes.row }}
           >
-            <SongTitleField source="title" showTrackNumbers={false} showWork={false} />
+            <SongTitleField
+              source="title"
+              showTrackNumbers={false}
+              showWork={false}
+            />
             {columns}
             <SongContextMenu
               source={'starred'}
