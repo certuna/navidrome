@@ -23,7 +23,9 @@ const initialState = {
 const mapToAudioLists = (item) => {
   // If item comes from a playlist, trackId is mediaFileId
   const trackId = item.mediaFileId || item.id
-  const displayedTitle = Boolean(item.movementName) ? item.movementName : item.title;
+  const displayedTitle = Boolean(item.movementName)
+    ? item.movementName
+    : item.title
   return {
     trackId,
     uuid: uuidv4(),
