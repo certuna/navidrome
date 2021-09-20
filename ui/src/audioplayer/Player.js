@@ -127,7 +127,11 @@ const Player = () => {
       setStartTime(Date.now())
       if (info.duration) {
         const song = info.song
-        {Boolean(song.movementName) ? document.title = `${song.movementName} - ${song.artist} - Navidrome` : document.title = `${song.title} - ${song.artist} - Navidrome`}
+        {
+          Boolean(song.movementName)
+            ? (document.title = `${song.movementName} - ${song.artist} - Navidrome`)
+            : (document.title = `${song.title} - ${song.artist} - Navidrome`)
+        }
         subsonic.nowPlaying(info.trackId)
         setScrobbled(false)
         if (config.gaTrackingId) {
