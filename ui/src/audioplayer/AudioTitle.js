@@ -24,23 +24,22 @@ const AudioTitle = React.memo(({ audioInfo, isMobile }) => {
     <Link to={`/album/${song.albumId}/show`} className={className}>
       <span>
         {displayWorkMovement && (
-        <span className={clsx(classes.songTitle, 'songTitle')}>
+          <span className={clsx(classes.songTitle, 'songTitle')}>
             {romanizedMovementNumber
               ? `${song.work}: ${romanizedMovementNumber}. ${song.movementName}`
               : `${song.work}: ${song.movementName}`}
-        </span>
+          </span>
         )}
         {!displayWorkMovement && (
-        <span className={clsx(classes.songTitle, 'songTitle')}>
+          <span className={clsx(classes.songTitle, 'songTitle')}>
             {[song.work, song.title, song.songSubtitle]
               .filter(Boolean)
               .join(' · ')}
-        </span>
+          </span>
         )}
         {isDesktop && (
           <QualityInfo record={qi} className={classes.qualityInfo} />
         )}
-
       </span>
       {!isMobile && (
         <span className={clsx(classes.songInfo)}>
