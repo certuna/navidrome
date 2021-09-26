@@ -14,6 +14,10 @@ import WorkIcon from '@material-ui/icons/MenuBook'
 import clsx from 'clsx'
 import { playTracks } from '../actions'
 import { AlbumContextMenu } from '../common'
+import Collapse from '@material-ui/core/Collapse'
+import IconButton from '@material-ui/core/IconButton'
+import ArrowDropDownCircle from '@material-ui/icons/ArrowDropDownCircle'
+import WorkExternalLinks from './WorkExternalLinks'
 
 const useStyles = makeStyles({
   subtitle: {
@@ -27,8 +31,15 @@ const useStyles = makeStyles({
     marginRight: '4px',
   },
   workIcon: {
-    verticalAlign: 'text-top',
+    verticalAlign: 'middle',
     marginRight: '4px',
+    float: 'left',
+    paddingTop: '4px',
+  },
+  workExpand: {
+    verticalAlign: 'top',
+    marginRight: '4px',
+    float: 'left',
   },
   row: {
     cursor: 'pointer',
@@ -104,22 +115,42 @@ const WorkRow = ({ record, onClick, colSpan, contextAlwaysVisible }) => {
     onClick(work)
   }
 
+  const [expanded, setExpanded] = React.useState(false)
+
+  const handleExpandClick = useCallback(() => {
+    setExpanded(!expanded)
+  }, [expanded, setExpanded])
+
   let subtitle = []
   if (record.work) {
     subtitle.push(record.work)
   }
 
   return (
-    <TableRow
-      hover
-      onClick={handlePlayWork(record.work)}
-      className={classes.row}
-    >
+    <TableRow hover className={classes.row}>
       <TableCell colSpan={colSpan}>
-        <Typography variant="h6" className={classes.subtitle}>
-          <WorkIcon className={classes.workIcon} fontSize={'small'} />
+        <IconButton
+          size={'small'}
+          expand={expanded}
+          aria-expanded={expanded}
+          onClick={handleExpandClick}
+          className={classes.workExpand}
+        >
+          <ArrowDropDownCircle />
+        </IconButton>
+        <WorkIcon className={classes.workIcon} fontSize={'small'} />
+        <Typography
+          variant="h6"
+          className={classes.subtitle}
+          onClick={handlePlayWork(record.work)}
+        >
           {subtitle.join(': ')}
         </Typography>
+        <Collapse timeout={'auto'} in={expanded}>
+          <Typography component={'div'}>
+            <WorkExternalLinks record={record} />
+          </Typography>
+        </Collapse>
       </TableCell>
       <TableCell>
         <AlbumContextMenu
