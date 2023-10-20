@@ -23,7 +23,7 @@ var _ = Describe("Tags", func() {
 
 			m := mds["tests/fixtures/test.mp3"]
 			Expect(m.Title()).To(Equal("Song"))
-			Expect(m.Album()).To(Equal("Album"))
+			Expect(m.AlbumNames()[0]).To(Equal("Album"))
 			Expect(m.Artist()).To(Equal([]string{"Alice", "Bob"}))
 			Expect(m.AlbumArtist()).To(Equal([]string{"Alice", "Bob"}))
 			Expect(m.Compilation()).To(BeTrue())
