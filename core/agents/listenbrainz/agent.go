@@ -50,7 +50,7 @@ func (l *listenBrainzAgent) formatListen(track *model.MediaFile) listenInfo {
 		TrackMetadata: trackMetadata{
 			ArtistName:  strings.Split(track.Artist, " · ")[0],
 			TrackName:   track.Title,
-			ReleaseName: track.Album,
+			ReleaseName: strings.Split(track.Album, " · ")[0],
 			AdditionalInfo: additionalInfo{
 				SubmissionClient:        consts.AppName,
 				SubmissionClientVersion: consts.Version,
