@@ -155,11 +155,11 @@ func (s mediaFileMapper) mapArtists(md metadata.Tags) (string, string, string, s
 }
 
 func (s mediaFileMapper) mapAlbumName(md metadata.Tags) string {
-	name := md.Album()
-	if name == "" {
+	names := md.AlbumNames()
+	if names[0] == "" {
 		return consts.UnknownAlbum
 	}
-	return name
+	return strings.Join(names, " · ")
 }
 
 func (s mediaFileMapper) trackID(md metadata.Tags) string {
