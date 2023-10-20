@@ -88,7 +88,7 @@ type Tags struct {
 
 // Common tags
 func (t Tags) Title() string { return t.getFirstTagValue("title", "sort_name", "titlesort") }
-func (t Tags) Album() string { return t.getFirstTagValue("album", "sort_album", "albumsort") }
+func (t Tags) AlbumNames() []string { return t.getAllTagValues("", "album") }
 func (t Tags) Artist() []string {
 	return t.getAllTagValues(conf.Server.Scanner.ArtistSeparators, "artist")
 }
@@ -209,8 +209,9 @@ func (t Tags) getAllTagValues(separators string, tagNames ...string) []string {
 	var values []string
 	for _, tag := range tagNames {
 		if v, ok := t.tags[tag]; ok {
-			// avoids a bug in TagLib where, only for the 'artist' tag, it returns one additional value consisting of all previous values, separated by a space
-			if (tag == "artist") && (len(v) > 2) && (conf.Server.Scanner.Extractor == "taglib") {
+			// avoids a strange bug in TagLib where, for the 'artist' and 'album' tags, it returns one additional value consisting of all previous values, separated by a space
+			specialtags := []string{"artist", "album"}
+			if slices.Contains(specialtags, tag) && (len(v) > 2) && (conf.Server.Scanner.Extractor == "taglib") {
 				v = v[:len(v)-1]
 			}
 
